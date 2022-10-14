@@ -1,0 +1,76 @@
+.search-bar{
+    background: #fff;
+    width: 90%;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 25px;
+    margin-top: 10px;
+
+    .search-icon{
+        flex: 15%;
+    }
+    input{
+        flex: 70%;
+        height: 25px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+    }
+    input:focus{
+        border:1px #eee solid;
+        padding: 0 5px;
+    }
+    .more-icon{
+        flex:15%;
+    }
+}
+.contact-list{
+    background: #fff;
+    height: 90%;
+    width: 90%;
+    border-radius: 10px;
+    text-align: left;
+    margin: 0 1em;
+    overflow: auto;
+    ::webkit-scrollbar {
+        background-color:red;
+        width: 1px;
+      }
+    h4{
+          margin: 2em 1em;
+    }
+
+    .contact-card{
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        margin: 0 1em;
+        padding: 1em 0;
+      
+        .avatar{
+            // border:1px solid red;
+            // flex:20%;
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .message-preview{
+            // border:1px solid red;
+            flex: 80%;
+            text-align: left;
+            padding:0 10px;
+            .contact-name{
+                font-weight: bold;
+            }
+            p{
+                margin: 5px;
+                font-weight: lighter;
+            }
+        }
+    }
+}

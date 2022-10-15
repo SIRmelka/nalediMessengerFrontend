@@ -7,10 +7,16 @@ import axios from 'axios';
 import { userContext } from '../context';
 const Contacts = () => {
 
-    const {host,token,userId,setSelectedGroup,conversations,setConversations,sending} = useContext(userContext)
+    const {host,token,userId,setSelectedGroup,conversations,setConversations,sending,setLastMessage} = useContext(userContext)
 
     useEffect(()=>{
-        axios({
+        getConversations()
+        
+    },[sending])
+
+    const getConversations = async()=>{
+
+        await axios({
             method:'get',
             url:`${host}/api/messages/conversations`,
             headers:{
@@ -20,8 +26,9 @@ const Contacts = () => {
         .then(users=>setConversations(users.data))
         .catch(err => console.log(err))
         console.log('reload messages');
-    },[sending])
+        setLastMessage(Date.now())
 
+    }
 
     return (
         <div className='contacts'>
@@ -43,7 +50,7 @@ const Contacts = () => {
 
                         <ContactCard 
                         avatar={conversation.users[0]._id==userId?conversation.users[1].profile:conversation.users[0].profile}
-                        message={conversation.messages.length!=0?conversation.messages[conversation.messages.length-1].message:"Brouillon"}
+                        message={conversation.messages.length!=0?conversation.messages[conversation.messages.length-1].message.substring(0,25)+"...":"Brouillon"}
                         username={
                             conversation.users[0]._id==userId?conversation.users[1].firstName:conversation.users[0].firstName
                         }

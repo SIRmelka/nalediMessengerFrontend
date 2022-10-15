@@ -7,24 +7,23 @@ import BottomBar from './BottomBar';
 
 const Messages = () => {
 
-    const {host,token,selectedGroup,setSelectedUser,userId,conversations,sending} = useContext(userContext)
+    const {host,token,selectedGroup,setSelectedUser,userId,conversations,lastMessage} = useContext(userContext)
 
     const [messages,setMessages] = useState([])
     const [loader,setLoader] = useState(true)
 
     useEffect(()=>{
 
-        conversations.map(async(element)=>{
-            await element._id==selectedGroup&&
+        conversations.map((element)=>{
+         element._id==selectedGroup&&
                setMessages(element)
         })
-       console.log('reload messages table');
-        setLoader(false)
-    },[selectedGroup,sending])
 
-    // console.log(messages);
+        setLoader(false)
+    },[selectedGroup,lastMessage])
+
     messages.users?
-        messages.users[0]._id==userId?setSelectedUser(messages.users[1]._id): setSelectedUser(messages.users[0]):console.log("");
+        messages.users[0]._id==userId?setSelectedUser(messages.users[1]._id): setSelectedUser(messages.users[0]._id):console.log("");
     return (
         <div className='messages'>
             <div className='messages-pannel'>

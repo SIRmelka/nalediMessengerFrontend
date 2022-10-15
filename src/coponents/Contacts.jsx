@@ -7,7 +7,7 @@ import axios from 'axios';
 import { userContext } from '../context';
 const Contacts = () => {
 
-    const {host,token,userId,setSelectedGroup,conversations,setConversations} = useContext(userContext)
+    const {host,token,userId,setSelectedGroup,conversations,setConversations,sending} = useContext(userContext)
 
     useEffect(()=>{
         axios({
@@ -19,7 +19,8 @@ const Contacts = () => {
         })
         .then(users=>setConversations(users.data))
         .catch(err => console.log(err))
-    },[])
+        console.log('reload messages');
+    },[sending])
 
 
     return (

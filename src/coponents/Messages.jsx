@@ -1,34 +1,41 @@
 import React, { useContext,useEffect, useState } from 'react';
 import MessageTile from './MessageTile';
 import ScrollToBottom from 'react-scroll-to-bottom'
-import {BsEmojiSmile} from 'react-icons/bs'
-import {AiFillCamera} from 'react-icons/ai'
-import {IoMdSend} from 'react-icons/io'
 import { userContext } from '../context';
 import axios from 'axios';
+import BottomBar from './BottomBar';
 
 const Messages = () => {
 
-    const {host,token,selectedGroup,userId,conversations} = useContext(userContext)
+    const {host,token,selectedGroup,setSelectedUser,userId,conversations,sending} = useContext(userContext)
 
-    const [messages,setMessages] = useState()
+    const [messages,setMessages] = useState([])
+    const [loader,setLoader] = useState(true)
 
     useEffect(()=>{
 
-        conversations.map((element)=>{
-            element._id==selectedGroup&&setMessages(element.messages);
+        conversations.map(async(element)=>{
+            await element._id==selectedGroup&&
+               setMessages(element)
         })
-    },[selectedGroup])
-  
+       console.log('reload messages table');
+        setLoader(false)
+    },[selectedGroup,sending])
+
+    // console.log(messages);
+    messages.users?
+        messages.users[0]._id==userId?setSelectedUser(messages.users[1]._id): setSelectedUser(messages.users[0]):console.log("");
     return (
         <div className='messages'>
             <div className='messages-pannel'>
                 <div className='chat-info'>
-                    <div className='discussion-avatar' style={{backgroundImage:`url(https://macoiffeuseafro.com/blog/wp-content/uploads/2018/08/viola_davis_800x450_0-620x420.jpg)`}}>
+
+                    
+                    <div className='discussion-avatar' style={{backgroundImage:`url(${!loader?messages.users[0].id!=userId?messages.users[1].profile:messages.users[0].profile:""})`}}>
 
                     </div>
                     <div className='about-discussion'>
-                        <p className='username'>Analis kitting</p>
+                        <p className='username'>{!loader?messages.users[0].id!=userId?messages.users[1].firstName:messages.users[0].firstName:""}</p>
                         <p>online</p>
                     </div>
                 </div>
@@ -36,10 +43,8 @@ const Messages = () => {
                 <div className='chat-section'>
                    
                    {
-                    messages?
-                    messages.map((message)=>{
-                        console.log(message)
-                        console.log(userId)
+                    messages.length!=0?
+                    messages.messages.map((message)=>{
                         return  <MessageTile 
                         from={message.from==userId?"other-messages":""}
                         display={message.from==userId?"you":"other"}
@@ -53,17 +58,7 @@ const Messages = () => {
                     
     
                 </div></ScrollToBottom>
-                <div className='bottom-section'>
-                    <div className='text-zone'>
-                        <BsEmojiSmile/>
-                        <input>
-                        </input>
-                        <AiFillCamera/>
-                    </div>
-                    <div className='send-icon'>
-                        <IoMdSend/>
-                    </div>
-                </div>
+               <BottomBar/>
             </div>
         </div>
     );

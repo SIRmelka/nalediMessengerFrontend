@@ -89,7 +89,6 @@
                     flex-direction: row;
                     .message-tile{
                         margin:10px 30px;
-                        min-height: 70px;
                         border-radius: 5px;
                         color:#222;
                         font-weight: 500;
@@ -186,6 +185,14 @@
             }
         }
     }
+}
+.no-message{
+    background-color: #fff;
+    border-radius: 10px;
+    background-image: url("https://media.istockphoto.com/vectors/isometric-smartphone-with-new-email-or-sms-message-vector-vector-id1014365320?k=20&m=1014365320&s=612x612&w=0&h=z_O_Yds7q0rDMkXWdmjSjO6Y6twCPMi0rPCIrJh-8tM=");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .scroller{
     // border:1px solid red;

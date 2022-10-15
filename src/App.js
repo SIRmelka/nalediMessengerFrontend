@@ -16,8 +16,9 @@ function App() {
   const [userId,setUserId] = useState()
   const [username,setUsername] = useState()
   const [selectedUser,setSelectedUser] = useState()
-  const [selectedGroup,setSelectedGroup] = useState()
+  const [selectedGroup,setSelectedGroup] = useState([])
   const [conversations,setConversations] = useState([])
+  const [sending,setSending] = useState(0)
 
   useEffect(()=>{
     if (localStorage.getItem('token')){
@@ -35,7 +36,8 @@ function App() {
         token,setIsConnected,host,userId,
         setUserId,username,selectedUser,
         setSelectedUser,selectedGroup,setSelectedGroup,
-        conversations,setConversations
+        conversations,setConversations,
+        sending,setSending
         }}>
       {
         isConnected?

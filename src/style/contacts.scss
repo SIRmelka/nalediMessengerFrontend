@@ -47,7 +47,7 @@
         display: flex;
         align-items: center;
         border-bottom: 1px solid #ddd;
-        margin: 0 1em;
+        margin: 3px 1em;
         padding: 1em 0;
       
         .avatar{
@@ -58,6 +58,7 @@
             border-radius: 50%;
             background-repeat: no-repeat;
             background-size: cover;
+            border: 1px solid #eee;
         }
         .message-preview{
             // border:1px solid red;
@@ -72,5 +73,8 @@
                 font-weight: lighter;
             }
         }
+    }
+    .contact-card:hover{
+        cursor: pointer;
     }
 }

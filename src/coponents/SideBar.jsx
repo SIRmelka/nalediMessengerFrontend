@@ -6,7 +6,7 @@ import {HiUserGroup} from 'react-icons/hi'
 import {IoLogOut} from 'react-icons/io5'
 const SideBar = () => {
 
-    const {setIsConnected} = useContext(userContext)
+    const {setIsConnected,setSearchingContacts} = useContext(userContext)
 
 
 
@@ -16,10 +16,10 @@ const SideBar = () => {
                 
             </div>
             <div className='navigation'>
-                <div className='icons'>
+                <div className='icons' onClick={()=>setSearchingContacts(false)}>
                     <AiFillMessage/>
                 </div>
-                <div className='icons'>
+                <div className='icons' onClick={()=>setSearchingContacts(true)}>
                     <HiUserGroup/>
                 </div>
             </div>

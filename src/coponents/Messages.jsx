@@ -24,10 +24,10 @@ const Messages = () => {
         setLoader(false)
     },[selectedGroup,sending])
 
-    // console.log(messages);
     messages.users?
         messages.users[0]._id==userId?setSelectedUser(messages.users[1]._id): setSelectedUser(messages.users[0]):console.log("");
     return (
+        
         <div className='messages'>
             <div className='messages-pannel' >
                 <div className='chat-info'>

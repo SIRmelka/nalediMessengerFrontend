@@ -15,6 +15,7 @@ const Contacts = () => {
         searchingContacts,setSearchingContacts
     } = useContext(userContext)
 
+    const [userList,setUserList] = useState([])
     useEffect(()=>{
         axios({
             method:'get',
@@ -28,7 +29,20 @@ const Contacts = () => {
         console.log('reload messages');
     },[sending])
 
+    useEffect(()=>{
+        axios({
+            method:'get',
+            url:`${host}/users`,
+            headers:{
+                'Authorization' : token
+            }
+        })
+        .then(users=>setUserList(users.data))
+        .catch(err => console.log(err))
+        console.log('get users');
+    },[])
 
+    
     return (
         <div className='contacts'>
 
@@ -41,7 +55,7 @@ const Contacts = () => {
             </div>
 
             {
-                searchingContacts?
+                !searchingContacts?
                 <div className='contact-list'>
                 <h4>Recents</h4>
                 {
@@ -63,9 +77,22 @@ const Contacts = () => {
                 }  
             </div>:
               <div className='users'>
-              o
+                <h4>Utilisateurs</h4>
+                <div>
+                    {
+                        userList.map((user)=>{
+                            return(
+                                <ContactCard
+                                avatar={user.profile!=''?user.profile:"https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-businessman-user-avatar-free-vector-png-image_1538405.jpg"}
+                                username={(user.firstName+" "+user.lastName)}
+                                />
+                            )
+                        })
+                    }
+                    
+                </div>
 
-          </div>
+             </div>
             }
             
 

@@ -42,17 +42,13 @@
             border-radius: 20px;
             display: flex;
             flex-direction: column;
-            background-image: url('../images/background.jpg');
-            background-size: contain;
-            border:3px solid #fff;
 
             .chat-info{
-                background: #fff;
                 display: flex;
                 align-items: center;
                 border-bottom: 1px solid #ddd;
+                width: 80%;
                 padding: 1em;
-                border-radius: 10px;
                 // justify-content: space-between;
 
                 .discussion-avatar{
@@ -93,12 +89,11 @@
                     flex-direction: row;
                     .message-tile{
                         margin:10px 30px;
-                        max-width:55% ;
                         border-radius: 5px;
-                        color:#fff;
+                        color:#222;
                         font-weight: 500;
                         padding: 10px 20px;
-                        background-color: #6C6C7A;
+                        background-color: #ddd;
                         position: relative;
                         text-align: left;
                         z-index: 1; //à ne pas enlever, très important//
@@ -108,7 +103,7 @@
                             bottom: 0;
                             height: 50px;
                             width: 50px;
-                            background: #6C6C7A;
+                            background: #ddd;
                             z-index: -1;
                         }
                         .me{
@@ -126,7 +121,7 @@
                     .other-messages{
                         align-self: center;
                         justify-self: center;
-                        text-align: right;
+                       
                         background-color: $primary;
                         color:#fff;
                     }
@@ -143,15 +138,37 @@
                         }
                         
                     }
+                   
                 }
+                
+                    
+                }
+                
             }
             .bottom-section{
+                z-index: 10000;
                 width: 100%;
                 height: 65px;
                 display: flex;
+                position: relative;
                 justify-content: space-between;
                 align-items: center;
-
+                .emojis{
+                    position: absolute;
+                    bottom: 100%;
+                    left:1%;
+                    // display: none;
+                      .EmojiPickerReact{
+                          position: absolute;
+                          // border: 1px solid red;
+                          top:-150;
+                          bottom:5px;
+                          width:100%;
+                          z-index: 3;
+                          
+                      }
+                  }
+              
                 .text-zone{
                     height: 65%;
                     width: 100%;
@@ -203,7 +220,7 @@
             }
         }
     }
-}
+
 .no-message{
     background-color: #fff;
     border-radius: 10px;

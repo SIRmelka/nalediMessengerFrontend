@@ -5,8 +5,10 @@ const MessageTile = ({from,pointer,message,display}) => {
         <div className={`message ${display}`}>
         <div className={`message-tile ${from}`}>
                         <p> {message}</p>
+                        
                         <div className={`pointer  ${pointer}`}></div>
-        </div></div>
+        </div>
+        </div>
     );
 };
 

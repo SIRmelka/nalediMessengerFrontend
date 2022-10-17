@@ -1,18 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {BsEmojiSmile} from 'react-icons/bs'
 import {AiFillCamera} from 'react-icons/ai'
 import {IoMdSend} from 'react-icons/io'
 import { userContext } from '../context';
 import axios from 'axios';
+import { useState } from 'react';
+import EmojiPicker from 'emoji-picker-react'
 
 const BottomBar = () => {
     
-    const {conversations,selectedGroup,selectedUser,userId,host,token,setSending,sending} = useContext(userContext)
-    const [message,setMessage] = useState()
-    console.log(message)
+    const {selectedGroup,selectedUser,userId,host,token,setSending,sending,putEmoji,setPutEmoji} = useContext(userContext)
+    // console.log(curentMessage)
+    const [curentMessage,setCurentMessage] = useState()
+  
     const sendMessage = async() =>{
-        
-       
         await axios({
             method:'post',
             url:`${host}/api/messages/newmessage/${selectedGroup}?from=${userId}&to=${selectedUser}`,
@@ -20,32 +21,41 @@ const BottomBar = () => {
                 'Authorization' : token
             },
             data:{
-                message: message,
+                message: curentMessage,
                 media:""
             }
         })
         .then(message=>{
             // setSending(sending+1)
             console.log(message)
-            setMessage("")
+            setCurentMessage("")
         })
         .catch(err => console.log(err))
         
         
         setSending(sending+1)
-        // console.log('')
     }
 
 
     return (
         <div className='bottom-section'>
+            {
+                putEmoji?
+                    <div className='emojis'>
+                        <EmojiPicker onEmojiClick={(emojiData,e)=>{
+                        setCurentMessage(curentMessage+" "+emojiData.emoji)
+                        }}/>
+                    </div>:""
+            }
+       
+             
         <div className='text-zone'>
-            <BsEmojiSmile/>
-            <input onChange={(e)=>{setMessage(e.target.value)}} value={message}>
+            <BsEmojiSmile onClick={()=>setPutEmoji(!putEmoji)}/>
+            <input onClick={()=>setPutEmoji(false)} onChange={(e)=>{setCurentMessage(e.target.value)}} value={curentMessage}>
             </input>
             <AiFillCamera/>
         </div>
-        <div className='send-icon' onClick={(e)=>sendMessage(e)}>
+        <div className='send-icon' onClick={()=>sendMessage()}>
             <IoMdSend/>
         </div>
     </div>

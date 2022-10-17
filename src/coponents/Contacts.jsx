@@ -5,18 +5,18 @@ import ContactCard from './ContactCard';
 import { useState } from 'react';
 import axios from 'axios';
 import { userContext } from '../context';
+
 const Contacts = () => {
 
-    const {host,token,userId,setSelectedGroup,conversations,setConversations,sending,setLastMessage} = useContext(userContext)
+    const {host,token,
+        userId,setSelectedGroup,
+        conversations,setConversations,
+        sending,setLastMessage,
+        searchingContacts,setSearchingContacts
+    } = useContext(userContext)
 
     useEffect(()=>{
-        getConversations()
-        
-    },[sending])
-
-    const getConversations = async()=>{
-
-        await axios({
+        axios({
             method:'get',
             url:`${host}/api/messages/conversations`,
             headers:{
@@ -26,9 +26,8 @@ const Contacts = () => {
         .then(users=>setConversations(users.data))
         .catch(err => console.log(err))
         console.log('reload messages');
-        setLastMessage(Date.now())
+    },[sending])
 
-    }
 
     return (
         <div className='contacts'>
@@ -41,7 +40,9 @@ const Contacts = () => {
 
             </div>
 
-            <div className='contact-list'>
+            {
+                searchingContacts?
+                <div className='contact-list'>
                 <h4>Recents</h4>
                 {
                     conversations.length?
@@ -50,7 +51,7 @@ const Contacts = () => {
 
                         <ContactCard 
                         avatar={conversation.users[0]._id==userId?conversation.users[1].profile:conversation.users[0].profile}
-                        message={conversation.messages.length!=0?conversation.messages[conversation.messages.length-1].message.substring(0,25)+"...":"Brouillon"}
+                        message={conversation.messages.length!=0?conversation.messages[conversation.messages.length-1].message:"Brouillon"}
                         username={
                             conversation.users[0]._id==userId?conversation.users[1].firstName:conversation.users[0].firstName
                         }
@@ -59,10 +60,16 @@ const Contacts = () => {
                         />
                         </div>
                     }):""
-                }
-                
+                }  
+            </div>:
+              <div className='users'>
+              o
 
-            </div>
+          </div>
+            }
+            
+
+          
         </div>
     );
 };

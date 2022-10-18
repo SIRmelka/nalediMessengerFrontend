@@ -12,12 +12,15 @@ const Contacts = () => {
         userId,setSelectedGroup,
         conversations,setConversations,
         sending,setLastMessage,
-        searchingContacts,setSearchingContacts
+        searchingContacts,setSearchingContacts,
+        selectedUser,setSelectedUser
     } = useContext(userContext)
 
-    const [userList,setUserList] = useState([])
+    const [userList,setUserList,lastMessage] = useState([])
+
+
     useEffect(()=>{
-        axios({
+            axios({
             method:'get',
             url:`${host}/api/messages/conversations`,
             headers:{
@@ -26,8 +29,9 @@ const Contacts = () => {
         })
         .then(users=>setConversations(users.data))
         .catch(err => console.log(err))
+        setLastMessage(Date.now())
         console.log('reload messages');
-    },[sending])
+    },[sending,searchingContacts])
 
     useEffect(()=>{
         axios({
@@ -39,10 +43,29 @@ const Contacts = () => {
         })
         .then(users=>setUserList(users.data))
         .catch(err => console.log(err))
-        console.log('get users');
-    },[])
 
-    
+        console.log('rendering');
+    },[selectedUser])
+
+    console.log(userId);
+
+    const startDiscussion = (id)=>{
+        axios({
+            method:'get',
+            url:`${host}/api/messages/startDiscussion?firstUser=${id}&secondUser=${userId}`,
+            headers:{
+                'Authorization' : token
+            }
+        })
+        .then(conv=>{
+            setSelectedGroup(conv.data._id)
+            console.log(conv)
+        })
+        .catch(err => console.log(err))
+
+     
+    }
+
     return (
         <div className='contacts'>
 
@@ -62,8 +85,8 @@ const Contacts = () => {
                     conversations.length?
                     conversations.map((conversation)=>{
                         return <div  onClick={()=>{setSelectedGroup(conversation._id)}}>
-
                         <ContactCard 
+                       
                         avatar={conversation.users[0]._id==userId?conversation.users[1].profile:conversation.users[0].profile}
                         message={conversation.messages.length!=0?conversation.messages[conversation.messages.length-1].message:"Brouillon"}
                         username={
@@ -82,10 +105,18 @@ const Contacts = () => {
                     {
                         userList.map((user)=>{
                             return(
+                                <div onClick={()=>{
+
+                                    setSelectedUser(user._id)
+                                    startDiscussion(user._id)
+
+                                    }}>
+                                      {console.log('actual selected user',selectedUser)}
                                 <ContactCard
                                 avatar={user.profile!=''?user.profile:"https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-businessman-user-avatar-free-vector-png-image_1538405.jpg"}
                                 username={(user.firstName+" "+user.lastName)}
                                 />
+                                </div>
                             )
                         })
                     }
@@ -95,8 +126,6 @@ const Contacts = () => {
              </div>
             }
             
-
-          
         </div>
     );
 };

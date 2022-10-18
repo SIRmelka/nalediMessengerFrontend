@@ -15,8 +15,8 @@ function App() {
 
   const [userId,setUserId] = useState()
   const [username,setUsername] = useState()
-  const [selectedUser,setSelectedUser] = useState()
   const [selectedGroup,setSelectedGroup] = useState([])
+  const [selectedUser,setSelectedUser] = useState([])
   const [conversations,setConversations] = useState([])
   const [sending,setSending] = useState(0)
   const [lastMessage,setLastMessage] = useState()
@@ -38,14 +38,14 @@ function App() {
     <div className="App">
       <userContext.Provider value={{
         token,setIsConnected,host,userId,
-        setUserId,username,selectedUser,
-        setSelectedUser,selectedGroup,setSelectedGroup,
+        setUserId,username,selectedGroup,setSelectedGroup,
         conversations,setConversations,
         sending,setSending,
         lastMessage,setLastMessage,
         curentMessage,setCurentMessage,
         putEmoji,setPutEmoji,
-        searchingContacts,setSearchingContacts
+        searchingContacts,setSearchingContacts,
+        selectedUser,setSelectedUser
         }}>
       {
         isConnected?

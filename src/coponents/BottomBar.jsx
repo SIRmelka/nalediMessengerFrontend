@@ -9,11 +9,12 @@ import EmojiPicker from 'emoji-picker-react'
 
 const BottomBar = () => {
     
-    const {selectedGroup,selectedUser,userId,host,token,setSending,sending,putEmoji,setPutEmoji} = useContext(userContext)
+    const {selectedGroup,selectedUser,userId,host,token,setSending,sending,putEmoji,setPutEmoji,setLastMessage} = useContext(userContext)
     // console.log(curentMessage)
     const [curentMessage,setCurentMessage] = useState()
   
     const sendMessage = async() =>{
+        setCurentMessage("")
         await axios({
             method:'post',
             url:`${host}/api/messages/newmessage/${selectedGroup}?from=${userId}&to=${selectedUser}`,
@@ -28,14 +29,13 @@ const BottomBar = () => {
         .then(message=>{
             // setSending(sending+1)
             console.log(message)
-            setCurentMessage("")
         })
         .catch(err => console.log(err))
         
         
         setSending(sending+1)
+        setLastMessage(Date.now)
     }
-
 
     return (
         <div className='bottom-section'>

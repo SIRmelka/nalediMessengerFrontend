@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SignInput = ({firstname,setFirstname,lastname,setLastname, age, setAge,email,setEmail,password,setPassword,}) => {
+const SignInput = ({firstname,setFirstname,lastname,setLastname,email,setEmail,password,setPassword,confirmPassword,setConfirmPassword}) => {
     return (
        <>
        <input 
@@ -17,12 +17,6 @@ const SignInput = ({firstname,setFirstname,lastname,setLastname, age, setAge,ema
         onChange={(event)=>{setLastname(event.target.value)}}
         ></input>
 
-        <input 
-        type='text'
-        placeholder='age'
-        value={age}
-        onChange={(event)=>{setAge(event.target.value)}}
-        ></input>
 
        <input 
         type="email" 
@@ -34,6 +28,13 @@ const SignInput = ({firstname,setFirstname,lastname,setLastname, age, setAge,ema
         <input 
         type='password' 
         placeholder='Password'
+        value={confirmPassword}
+        onChange={(event)=>{setConfirmPassword(event.target.value)}}
+        ></input>
+
+        <input 
+        type='password' 
+        placeholder='confirm Password'
         value={password}
         onChange={(event)=>{setPassword(event.target.value)}}
         ></input>

@@ -13,7 +13,7 @@ const Messages = () => {
 
     const [messages,setMessages] = useState([])
     const [loader,setLoader] = useState(true)
-
+    console.log(userId);
     useEffect(()=>{
 
         conversations.map(async(element)=>{
@@ -22,10 +22,10 @@ const Messages = () => {
         })
        console.log('reload messages table');
         setLoader(false)
-    },[selectedGroup,sending])
+    },[selectedGroup,sending,lastMessage])
 
     messages.users?
-        messages.users[0]._id==userId?setSelectedUser(messages.users[1]._id): setSelectedUser(messages.users[0]):console.log("");
+        messages.users[0]._id==userId?setSelectedUser(messages.users[1]._id): setSelectedUser(messages.users[0]._id):console.log("");
     return (
         
         <div className='messages'>
@@ -33,11 +33,11 @@ const Messages = () => {
                 <div className='chat-info'>
 
                     
-                    <div className='discussion-avatar' style={{backgroundImage:`url(${!loader?messages.users[0].id==selectedUser?messages.users[0].profile:messages.users[1].profile:""})`}}>
+                    <div className='discussion-avatar' style={{backgroundImage:`url(${!loader?messages.users[0]._id==selectedUser?messages.users[0].profile:messages.users[1].profile:""})`}}>
 
                     </div>
                     <div className='about-discussion'>
-                        <p className='username'>{!loader?messages.users[0].id==selectedUser?messages.users[0].firstName:messages.users[1].firstName:""}</p>
+                        <p className='username'>{!loader?messages.users[0]._id==selectedUser?messages.users[0].firstName:messages.users[1].firstName:""}</p>
                         <p>online</p>
                     </div>
                 </div>

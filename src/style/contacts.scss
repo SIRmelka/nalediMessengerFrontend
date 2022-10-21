@@ -49,6 +49,7 @@
         border-bottom: 1px solid #ddd;
         margin: 3px 1em;
         padding: 1em 0;
+        position: relative;
       
         .avatar{
             // border:1px solid red;
@@ -59,6 +60,8 @@
             background-repeat: no-repeat;
             background-size: cover;
             border: 1px solid #eee;
+            position:relative;
+          
         }
         .message-preview{
             // border:1px solid red;
@@ -71,6 +74,13 @@
             p{
                 margin: 5px;
                 font-weight: lighter;
+            }
+            .new{
+                position: absolute;
+                top:0;
+                right: 0;
+                color:$primary;
+                font-size: 100px;
             }
         }
     }

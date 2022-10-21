@@ -2,18 +2,19 @@ import React, { useContext } from 'react';
 import {BsEmojiSmile} from 'react-icons/bs'
 import {AiFillCamera} from 'react-icons/ai'
 import {IoMdSend} from 'react-icons/io'
-import { userContext } from '../context';
+import { userContext,socket } from '../context';
 import axios from 'axios';
 import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react'
 
 const BottomBar = () => {
     
-    const {selectedGroup,selectedUser,userId,host,token,setSending,sending,putEmoji,setPutEmoji,setLastMessage} = useContext(userContext)
+    const {selectedGroup,selectedUser,userId,host,token,setSending,putEmoji,setPutEmoji,setLastMessage} = useContext(userContext)
     // console.log(curentMessage)
     const [curentMessage,setCurentMessage] = useState()
   
     const sendMessage = async() =>{
+        setSending(true)
         setCurentMessage("")
         await axios({
             method:'post',
@@ -27,13 +28,11 @@ const BottomBar = () => {
             }
         })
         .then(message=>{
-            // setSending(sending+1)
-            console.log(message)
+            socket.emit('sendmessage', curentMessage )
+
         })
         .catch(err => console.log(err))
         
-        
-        setSending(sending+1)
         setLastMessage(Date.now)
     }
 

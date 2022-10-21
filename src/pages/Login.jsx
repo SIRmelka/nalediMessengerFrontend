@@ -10,15 +10,13 @@ const Login = () => {
 const host = "http://localhost:3001/users/"
 
 
-const {setIsConnected,setUserId} = useContext(userContext)
+const {setIsConnected,setProfile} = useContext(userContext)
 
 const [connexionMessage,setConexionMessage] = useState({})
 const [email,setEmail] = useState("")
 const [password,setPassword] = useState("")
 const [firstname,setFirstname] = useState("")
 const [lastname,setLastname] = useState("")
-const [age,setAge] = useState("")
-const [profile,setprofile] = useState("")
 const [method,setMethod] = useState('login')
 
 const login = () =>{
@@ -36,12 +34,12 @@ const login = () =>{
         console.log(message);
         localStorage.setItem('userId',message.data.userId)
         setIsConnected(true)
+        setProfile(message.data.profile)
     })
     .catch((err) => {
         setConexionMessage({message:err.response.data,status:err.response.status})
     })
 }
-console.log(method);
 
 const signup = () =>{
     axios({
@@ -51,13 +49,12 @@ const signup = () =>{
             firstName:firstname,
             lastName: lastname,
             email: email,
-            profile:"yes",
+            profile:`https://ui-avatars.com/api/?name=${firstname}+${lastname}&background=random`,
             password: password,
         }
     })
     .then((message) => {
        login()
-       console.log(message);
     })
     .catch((err) => {
         console.log(err);
@@ -68,8 +65,6 @@ const signup = () =>{
 const submit = ()=>{
     method==='login'?login():signup()
 }
-console.log(connexionMessage);
-console.log(firstname);
     return (
         <div className='login'>
            <div className='left-section'></div>

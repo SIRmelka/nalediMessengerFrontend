@@ -1,20 +1,22 @@
 import React, { useContext } from 'react';
-import { userContext } from '../context';
+import { userContext} from '../context';
 import {AiFillMessage} from 'react-icons/ai'
 import {HiUserGroup} from 'react-icons/hi'
 
+
 import {IoLogOut} from 'react-icons/io5'
+
 const SideBar = () => {
 
-    const {setIsConnected,setSearchingContacts} = useContext(userContext)
-
+    const {setIsConnected,setSearchingContacts, profile} = useContext(userContext)
 
 
     return (
+     
         <div className='side-bar'>
-            <div className='picture' style={{backgroundImage:`url(https://static.toiimg.com/photo/83890825/83890825.jpg?v=3)`}}>
-                
-            </div>
+              
+            <div className='picture' style={{backgroundImage:`${"asdasd"}`}}>
+            </div>  
             <div className='navigation'>
                 <div className='icons' onClick={()=>setSearchingContacts(false)}>
                     <AiFillMessage/>

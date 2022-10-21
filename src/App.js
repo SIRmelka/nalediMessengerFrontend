@@ -1,7 +1,7 @@
 import './App.scss';
 import Login from './pages/Login';
 import { userContext } from './context';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Home from './pages/Home';
 
 
@@ -15,10 +15,11 @@ function App() {
 
   const [userId,setUserId] = useState()
   const [username,setUsername] = useState()
+  const [profile,setProfile] = useState("")
   const [selectedGroup,setSelectedGroup] = useState([])
   const [selectedUser,setSelectedUser] = useState([])
   const [conversations,setConversations] = useState([])
-  const [sending,setSending] = useState(0)
+  const [sending,setSending] = useState(false)
   const [lastMessage,setLastMessage] = useState()
   const [curentMessage,setCurentMessage] = useState(' ')
   const [putEmoji,setPutEmoji] = useState(false)
@@ -33,24 +34,26 @@ function App() {
     }
   })
 
-
   return (
     <div className="App">
       <userContext.Provider value={{
         token,setIsConnected,host,userId,
-        setUserId,username,selectedGroup,setSelectedGroup,
+        setUserId,username,setUsername,
+        selectedGroup,setSelectedGroup,
         conversations,setConversations,
         sending,setSending,
         lastMessage,setLastMessage,
         curentMessage,setCurentMessage,
         putEmoji,setPutEmoji,
         searchingContacts,setSearchingContacts,
-        selectedUser,setSelectedUser
+        selectedUser,setSelectedUser,
+        profile,setProfile
         }}>
       {
         isConnected?
         <Home/>:<Login/>
       }
+     
      </userContext.Provider>
     </div>
   );

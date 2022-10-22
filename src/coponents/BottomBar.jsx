@@ -1,17 +1,22 @@
 import React, { useContext } from 'react';
 import {BsEmojiSmile} from 'react-icons/bs'
 import {AiFillCamera} from 'react-icons/ai'
-import {IoMdSend} from 'react-icons/io'
+import {IoMdCloseCircle, IoMdSend} from 'react-icons/io'
 import { userContext,socket } from '../context';
 import axios from 'axios';
 import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react'
+import { useFileUpload } from 'use-file-upload';
 
 const BottomBar = () => {
     
     const {selectedGroup,selectedUser,userId,host,token,setSending,putEmoji,setPutEmoji,setLastMessage} = useContext(userContext)
     // console.log(curentMessage)
     const [curentMessage,setCurentMessage] = useState()
+    const [file,setFile] = useFileUpload()
+    const [selectedFile,setSelectedFile] = useState(false)
+    const [media,setMedia] = useState()
+    const fileReader = new FileReader();
   
     const sendMessage = async() =>{
         setSending(true)
@@ -24,7 +29,7 @@ const BottomBar = () => {
             },
             data:{
                 message: curentMessage,
-                media:""
+                media:selectedFile
             }
         })
         .then(message=>{
@@ -34,6 +39,14 @@ const BottomBar = () => {
         .catch(err => console.log(err))
         
         setLastMessage(Date.now)
+    }
+
+    function printFile(file) {
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+          console.log(evt.target.result);
+        };
+        reader.readAsText(file);
     }
 
     return (
@@ -46,17 +59,30 @@ const BottomBar = () => {
                         }}/>
                     </div>:""
             }
-       
+            {
+            file?
+            selectedFile!==''?
+            <div className='image-preview'>
+                <div  className='image' style={{backgroundImage:`url(${file.source})`}}>
+                    <IoMdCloseCircle className='close' onClick={()=>setSelectedFile('')}/>
+                </div>
+            </div>:""
+            :""
+            }    
              
         <div className='text-zone'>
             <BsEmojiSmile onClick={()=>setPutEmoji(!putEmoji)}/>
             <input onClick={()=>setPutEmoji(false)} onChange={(e)=>{setCurentMessage(e.target.value)}} value={curentMessage}>
             </input>
-            <AiFillCamera/>
+            <AiFillCamera onClick={()=>{
+                setFile()
+                setSelectedFile(file.source)
+                }}/>
         </div>
         <div className='send-icon' onClick={()=>sendMessage()}>
             <IoMdSend/>
         </div>
+
     </div>
     );
 };

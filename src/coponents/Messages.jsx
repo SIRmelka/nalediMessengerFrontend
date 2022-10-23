@@ -9,9 +9,8 @@ import BottomBar from './BottomBar';
 
 const Messages = () => {
 
-    const {selectedGroup,selectedUser,setSelectedUser,userId,conversations,lastMessage,sending,curentMessage} = useContext(userContext)
+    const {selectedGroup,selectedUser,setSelectedUser,userId,conversations,lastMessage,sending,curentMessage,messages,setMessages} = useContext(userContext)
 
-    const [messages,setMessages] = useState([])
     const [loader,setLoader] = useState(true)
     
     const allmessages = () =>{
@@ -27,15 +26,19 @@ const Messages = () => {
 
         allmessages()
        
-    },[selectedGroup,sending])
+    },[messages,selectedGroup])
 
     useEffect(()=>{
         socket.on('newmessage', (data)=>{
             allmessages()
+            alert('nouveau message')
         })
-    },[socket,lastMessage,sending])
+    },[socket])
+
         messages.users?
-        messages.users[0]._id==userId?setSelectedUser(messages.users[1]._id): setSelectedUser(messages.users[0]._id):console.log("");
+        messages.users[0]._id==userId?
+            setSelectedUser(messages.users[1]._id): 
+            setSelectedUser(messages.users[0]._id):console.log("");
     
     
         return (
@@ -58,7 +61,7 @@ const Messages = () => {
                 <div className='chat-section'>
                    
                    {
-                    messages.length!=0?
+                    messages.length!=0? 
                     messages.messages.map((message)=>{
                         return  <MessageTile 
                         from={message.from==userId?"other-messages":""}
@@ -79,8 +82,6 @@ const Messages = () => {
                         message={"...sending"}
                     />:""
                    }
-                    
-                   
                 </div>
                 
                 </ScrollToBottom>

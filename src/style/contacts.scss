@@ -88,3 +88,24 @@
         cursor: pointer;
     }
 }
+.contact-loader{
+    height: 75px;
+    border: 1px solid #ddd;
+    margin: 0.5em 0.5em;
+    border-radius: 10px; 
+    animation: loader 3s infinite ease-in;
+    background:#ddd;
+
+    @keyframes loader {
+        0%{
+            opacity: 0.2;
+        }
+        50%{
+            opacity: 1;
+        }
+        100%{
+           opacity: 0.2;
+        }
+    }
+    
+}

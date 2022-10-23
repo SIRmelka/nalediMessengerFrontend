@@ -15,10 +15,11 @@ function App() {
 
   const [userId,setUserId] = useState()
   const [username,setUsername] = useState()
-  const [profile,setProfile] = useState("")
+  const [profile,setProfile] = useState()
   const [selectedGroup,setSelectedGroup] = useState([])
   const [selectedUser,setSelectedUser] = useState([])
   const [conversations,setConversations] = useState([])
+  const [messages,setMessages] = useState([])
   const [sending,setSending] = useState(false)
   const [lastMessage,setLastMessage] = useState()
   const [curentMessage,setCurentMessage] = useState(' ')
@@ -41,6 +42,7 @@ function App() {
         setUserId,username,setUsername,
         selectedGroup,setSelectedGroup,
         conversations,setConversations,
+        messages,setMessages,
         sending,setSending,
         lastMessage,setLastMessage,
         curentMessage,setCurentMessage,

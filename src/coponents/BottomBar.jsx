@@ -10,7 +10,7 @@ import { useFileUpload } from 'use-file-upload';
 
 const BottomBar = () => {
     
-    const {selectedGroup,selectedUser,userId,host,token,setSending,putEmoji,setPutEmoji,setLastMessage} = useContext(userContext)
+    const {selectedGroup,selectedUser,userId,host,token,setSending,putEmoji,setPutEmoji,setLastMessage,messages,setMessages} = useContext(userContext)
     // console.log(curentMessage)
     const [curentMessage,setCurentMessage] = useState()
     const [file,setFile] = useFileUpload()
@@ -33,12 +33,23 @@ const BottomBar = () => {
             }
         })
         .then(message=>{
+            const data = {
+                date: Date.now(),
+                from: userId,
+                media:"",
+                message: curentMessage,
+                seen: false
+            }
             socket.emit('sendmessage', curentMessage )
+            console.log(messages);
+            messages.messages.push(data)
+            setSending(false)
+            setLastMessage(Date.now)
 
         })
         .catch(err => console.log(err))
         
-        setLastMessage(Date.now)
+        
     }
 
     function printFile(file) {

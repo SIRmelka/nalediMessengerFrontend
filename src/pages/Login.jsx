@@ -33,6 +33,7 @@ const login = () =>{
         localStorage.setItem('token',message.data.token)
         console.log(message);
         localStorage.setItem('userId',message.data.userId)
+        localStorage.setItem('profile',message.data.profile)
         setIsConnected(true)
         setProfile(message.data.profile)
     })

@@ -5,6 +5,7 @@ import ContactCard from './ContactCard';
 import { useState } from 'react';
 import axios from 'axios';
 import { userContext,socket } from '../context';
+import ContactLoader from './ContactLoader';
 
 const Contacts = () => {
 
@@ -14,17 +15,17 @@ const Contacts = () => {
         sending,setLastMessage,
         searchingContacts,setSearchingContacts,
         selectedUser,setSelectedUser,
-        setSending
+        setSending,lastMessage
        
     } = useContext(userContext)
 
-    const [userList,setUserList,lastMessage] = useState([])
+    const [userList,setUserList] = useState([])
 
     useEffect(()=>{
         socket.on('newmessage', (data)=>{
             allconversations()
         })
-    },[socket])
+    },[])
 
     const allconversations = ()=>{
         axios({
@@ -40,12 +41,12 @@ const Contacts = () => {
             }
         )
         .catch(err => console.log(err))
-        setLastMessage(Date.now())
+
     }
 
     useEffect(()=>{
             allconversations()
-    },[sending,searchingContacts])
+    },[lastMessage,selectedUser])
 
 
     useEffect(()=>{
@@ -73,10 +74,9 @@ const Contacts = () => {
             setSelectedGroup(conv.data._id)
         })
         .catch(err => console.log(err))
-
-     
     }
 
+    
     return (
         <div className='contacts'>
 
@@ -94,8 +94,8 @@ const Contacts = () => {
                 <h4>Recents</h4>
                 {
                     conversations.length?
-                    conversations.map((conversation)=>{
-                        return <div  onClick={()=>{setSelectedGroup(conversation._id)}}>
+                    conversations.map((conversation,index)=>{
+                        return <div key={index} onClick={()=>{setSelectedGroup(conversation._id)}}>
                         <ContactCard 
                         avatar={conversation.users[0]._id==userId?conversation.users[1].profile:conversation.users[0].profile}
                         message={conversation.messages.length!=0?conversation.messages[conversation.messages.length-1].message:"Brouillon"}
@@ -106,7 +106,7 @@ const Contacts = () => {
     
                         />
                         </div>
-                    }):"loading"
+                    }):<ContactLoader/>
                 }  
             </div>:
               <div className='users'>
@@ -114,15 +114,27 @@ const Contacts = () => {
                 <div>
                     {
                         userList.map((user)=>{
+                           
                             return(
+                                
                                 <div onClick={()=>{
+                                    {
+                                        if(userId!==user._id)
+                                        {setSelectedUser(user._id)
+                                        startDiscussion(user._id)}
+                                        else{
+                                            alert("you")
+                                        }
 
-                                    setSelectedUser(user._id)
-                                    startDiscussion(user._id)
-                           }}>
+
+                                    }
+                                    
+                                }}>
                                 <ContactCard
                                 avatar={user.profile!=''?user.profile:""}
                                 username={(user.firstName+" "+user.lastName)}
+                                message={user._id==userId?"Vous":""}
+                                
                                 />
                                 </div>
                             )

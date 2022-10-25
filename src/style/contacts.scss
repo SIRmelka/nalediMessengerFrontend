@@ -1,111 +1,110 @@
-.search-bar{
-    background: #fff;
-    width: 90%;
-    height: 40px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-size: 25px;
-    margin-top: 10px;
+.search-bar {
+  background: #fff;
+  width: 90%;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 25px;
+  margin-top: 10px;
 
-    .search-icon{
-        flex: 15%;
-    }
-    input{
-        flex: 70%;
-        height: 25px;
-        border: none;
-        outline: none;
-        border-radius: 10px;
-    }
-    input:focus{
-        border:1px #eee solid;
-        padding: 0 5px;
-    }
-    .more-icon{
-        flex:15%;
-    }
-}
-.contact-list,.users{
-    background: #fff;
-    height: 90%;
-    width: 90%;
+  .search-icon {
+    flex: 15%;
+  }
+  input {
+    flex: 70%;
+    height: 25px;
+    border: none;
+    outline: none;
     border-radius: 10px;
-    text-align: left;
-    margin: 0 1em;
-    overflow: auto;
-    ::webkit-scrollbar {
-        background-color:red;
-        width: 1px;
-      }
-    h4{
-          margin: 2em 1em;
-    }
-
-    .contact-card{
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid #ddd;
-        margin: 3px 1em;
-        padding: 1em 0;
-        position: relative;
-      
-        .avatar{
-            // border:1px solid red;
-            // flex:20%;
-            height: 60px;
-            width: 60px;
-            border-radius: 50%;
-            background-repeat: no-repeat;
-            background-size: cover;
-            border: 1px solid #eee;
-            position:relative;
-          
-        }
-        .message-preview{
-            // border:1px solid red;
-            flex: 80%;
-            text-align: left;
-            padding:0 10px;
-            .contact-name{
-                font-weight: bold;
-            }
-            p{
-                margin: 5px;
-                font-weight: lighter;
-            }
-            .new{
-                position: absolute;
-                top:0;
-                right: 0;
-                color:$primary;
-                font-size: 100px;
-            }
-        }
-    }
-    .contact-card:hover{
-        cursor: pointer;
-    }
+  }
+  input:focus {
+    border: 1px #eee solid;
+    padding: 0 5px;
+  }
+  .more-icon {
+    flex: 15%;
+  }
 }
-.contact-loader{
-    height: 75px;
-    border: 1px solid #ddd;
-    margin: 0.5em 0.5em;
-    border-radius: 10px; 
-    animation: loader 3s infinite ease-in;
-    background:#ddd;
+.contact-list,
+.users {
+  background: #fff;
+  height: 90%;
+  width: 90%;
+  border-radius: 10px;
+  text-align: left;
+  margin: 0 1em;
+  overflow: auto;
+  ::webkit-scrollbar {
+    background-color: red;
+    width: 1px;
+  }
+  h4 {
+    margin: 2em 1em;
+  }
 
-    @keyframes loader {
-        0%{
-            opacity: 0.2;
-        }
-        50%{
-            opacity: 1;
-        }
-        100%{
-           opacity: 0.2;
-        }
+  .contact-card {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    margin: 3px 1em;
+    padding: 1em 0;
+    position: relative;
+
+    .avatar {
+      // border:1px solid red;
+      // flex:20%;
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border: 1px solid #eee;
+      position: relative;
     }
-    
+    .message-preview {
+      // border:1px solid red;
+      flex: 80%;
+      text-align: left;
+      padding: 0 10px;
+      .contact-name {
+        font-weight: bold;
+      }
+      p {
+        margin: 5px;
+        font-weight: lighter;
+      }
+      .new {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: $primary;
+        font-size: 100px;
+      }
+    }
+  }
+  .contact-card:hover {
+    cursor: pointer;
+  }
+}
+.contact-loader {
+  height: 75px;
+  border: 1px solid #ddd;
+  margin: 0.5em 0.5em;
+  border-radius: 10px;
+  animation: loader 3s infinite ease-in;
+  background: #ddd;
+
+  @keyframes loader {
+    0% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
 }

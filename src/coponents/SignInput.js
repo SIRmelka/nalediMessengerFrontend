@@ -1,45 +1,65 @@
-import React from 'react';
+import React from 'react'
 
-const SignInput = ({firstname,setFirstname,lastname,setLastname,email,setEmail,password,setPassword,confirmPassword,setConfirmPassword}) => {
-    return (
-       <>
-       <input 
-        type='text'
-        placeholder='Firstname'
+const SignInput = ({
+  firstname,
+  setFirstname,
+  lastname,
+  setLastname,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  confirmPassword,
+  setConfirmPassword,
+}) => {
+  return (
+    <>
+      <input
+        type="text"
+        placeholder="Firstname"
         value={firstname}
-        onChange={(event)=>{setFirstname(event.target.value)}}
-        ></input>
+        onChange={(event) => {
+          setFirstname(event.target.value)
+        }}
+      ></input>
 
-        <input 
-        type='text'
-        placeholder='Lastname'
+      <input
+        type="text"
+        placeholder="Lastname"
         value={lastname}
-        onChange={(event)=>{setLastname(event.target.value)}}
-        ></input>
+        onChange={(event) => {
+          setLastname(event.target.value)
+        }}
+      ></input>
 
-
-       <input 
-        type="email" 
-        placeholder='E-mail address'
+      <input
+        type="email"
+        placeholder="E-mail address"
         value={email}
-        onChange={(event)=>{setEmail(event.target.value)}}
-        ></input>
-        
-        <input 
-        type='password' 
-        placeholder='Password'
+        onChange={(event) => {
+          setEmail(event.target.value)
+        }}
+      ></input>
+
+      <input
+        type="password"
+        placeholder="Password"
         value={confirmPassword}
-        onChange={(event)=>{setConfirmPassword(event.target.value)}}
-        ></input>
+        onChange={(event) => {
+          setConfirmPassword(event.target.value)
+        }}
+      ></input>
 
-        <input 
-        type='password' 
-        placeholder='confirm Password'
+      <input
+        type="password"
+        placeholder="confirm Password"
         value={password}
-        onChange={(event)=>{setPassword(event.target.value)}}
-        ></input>
-       </>
-    );
-};
+        onChange={(event) => {
+          setPassword(event.target.value)
+        }}
+      ></input>
+    </>
+  )
+}
 
-export default SignInput;
+export default SignInput

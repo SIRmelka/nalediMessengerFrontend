@@ -1,31 +1,19 @@
-import React from 'react';
+import React from 'react'
 
-const ContactLoader = () => {
-    return (
-        <>
-            <div className='contact-loader'>
-            <div className='inner-loader'>
-            </div>
-            </div>
-            <div className='contact-loader'>
-            <div className='inner-loader'>
-            </div>
-        </div>
-        <div className='contact-loader'>
-            <div className='inner-loader'>
-            </div>
-        </div>
-        <div className='contact-loader'>
-            <div className='inner-loader'>
-            </div>
-        </div>
-        <div className='contact-loader'>
-            <div className='inner-loader'>
-            </div>
-        </div>
-        </>
-        
-    );
-};
+const count = ['m', 'e', 'l', 'c', 'h', 'i']
 
-export default ContactLoader;
+function ContactLoader() {
+  return (
+    <>
+      {count.map((element, index) => {
+        return (
+          <div className="contact-loader" key={index}>
+            <div className="inner-loader"></div>
+          </div>
+        )
+      })}
+    </>
+  )
+}
+
+export default ContactLoader

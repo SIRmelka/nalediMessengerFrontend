@@ -18,6 +18,8 @@ const Messages = () => {
 
   const [loader, setLoader] = useState(true)
 
+  const audiofile = new Audio('/messageIn.mp3')
+
   const allmessages = () => {
     conversations.map(async (element) => {
       return (await element._id) === selectedGroup && setMessages(element)
@@ -33,7 +35,7 @@ const Messages = () => {
   useEffect(() => {
     socket.on('newmessage', () => {
       allmessages()
-      alert('nouveau message')
+      audiofile.play()
     })
   }, [socket])
 

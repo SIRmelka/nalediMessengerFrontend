@@ -70,6 +70,7 @@
         }
       }
       .chat-section {
+      
         display: flex;
         flex-direction: column;
         .you {
@@ -266,9 +267,20 @@
   overflow-x: hidden;
 }
 .image-sended{
-  width: 200px;
+  width: 300px;
   border-radius:10px ;
   border: 1px solid #ddd;
+  animation: image-zoom 0.3s;
+
+  @keyframes image-zoom {
+    from{
+      transform: scale(0);
+    }
+    to{
+      transform: scale(1);
+    }
+    
+  }
 }
 .image-input{
   display: none;

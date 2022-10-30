@@ -62,7 +62,6 @@ function BottomBar() {
         messages.messages.push(data)
         setSending(false)
         setLastMessage(Date.now)
-        console.log('message sended')
       })
       .catch((err) => console.log(err))
   }
@@ -81,9 +80,7 @@ function BottomBar() {
           )
           .then((res) => {
             setSelectedFile('')
-            console.log(res.data.secure_url)
             postMessage(curentMessage, res.data.secure_url)
-            console.log('image uploaded')
           })
           .catch((err) => console.log(err))
       : postMessage(curentMessage, '')

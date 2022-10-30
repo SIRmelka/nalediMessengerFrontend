@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState, useEffect } from 'react'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { AiFillCamera } from 'react-icons/ai'
-import { IoMdSend } from 'react-icons/io'
+import { IoMdSend, IoMdCloseCircle } from 'react-icons/io'
 import axios from 'axios'
 import EmojiPicker from 'emoji-picker-react'
 import { userContext, socket } from '../context'
 
 function BottomBar() {
-  // const [messageIn] = useState(new Audio('../messageIn.mp3'))
   const messageSent = new Audio('/messageSent.mp3')
 
   const {
@@ -22,14 +21,24 @@ function BottomBar() {
     setLastMessage,
     messages,
   } = useContext(userContext)
-  // console.log(curentMessage)
   const [curentMessage, setCurentMessage] = useState()
-  const [selectedFile] = useState(false)
+  const [selectedFile, setSelectedFile] = useState(false)
+  const [previewLink, setPreviewLink] = useState()
+  const imageRef = useRef()
+  const formData = new FormData()
+  formData.append('file', selectedFile)
+  formData.append('upload_preset', 'sirMelka')
 
-  const sendMessage = async () => {
-    setSending(true)
-    messageSent.play()
-    setCurentMessage('')
+  useEffect(() => {
+    if (!selectedFile) return setPreviewLink(null)
+    const reader = new FileReader()
+    reader.readAsDataURL(selectedFile)
+    reader.onloadend = () => {
+      setPreviewLink(reader.result)
+    }
+  }, [selectedFile])
+
+  const postMessage = async (text, media) => {
     await axios({
       method: 'post',
       url: `${host}/api/messages/newmessage/${selectedGroup}?from=${userId}&to=${selectedUser}`,
@@ -37,15 +46,15 @@ function BottomBar() {
         Authorization: token,
       },
       data: {
-        message: curentMessage,
-        media: selectedFile,
+        message: text,
+        media: media,
       },
     })
       .then(() => {
         const data = {
           date: Date.now(),
           from: userId,
-          media: '',
+          media: media,
           message: curentMessage,
           seen: false,
         }
@@ -53,10 +62,32 @@ function BottomBar() {
         messages.messages.push(data)
         setSending(false)
         setLastMessage(Date.now)
+        console.log('message sended')
       })
       .catch((err) => console.log(err))
   }
 
+  const sendMessage = async () => {
+    setSending(true)
+    messageSent.play()
+    setCurentMessage('')
+    setPreviewLink('')
+
+    selectedFile
+      ? await axios
+          .post(
+            'https://api.cloudinary.com/v1_1/drfvs4cyj/image/upload/',
+            formData
+          )
+          .then((res) => {
+            setSelectedFile('')
+            console.log(res.data.secure_url)
+            postMessage(curentMessage, res.data.secure_url)
+            console.log('image uploaded')
+          })
+          .catch((err) => console.log(err))
+      : postMessage(curentMessage, '')
+  }
   return (
     <div className="bottom-section">
       {putEmoji ? (
@@ -70,26 +101,21 @@ function BottomBar() {
       ) : (
         ''
       )}
-      {/* {file ? (
-        selectedFile !== '' ? (
-          <div className="image-preview">
-            <div
-              className="image"
-              style={{ backgroundImage: `url(${file.source})` }}
-            >
-              <IoMdCloseCircle
-                className="close"
-                onClick={() => setSelectedFile('')}
-              />
-            </div>
+      {previewLink ? (
+        <div className="image-preview">
+          <div
+            className="image"
+            style={{ backgroundImage: `url(${previewLink})` }}
+          >
+            <IoMdCloseCircle
+              className="close"
+              onClick={() => setSelectedFile('')}
+            />
           </div>
-        ) : (
-          ''
-        )
+        </div>
       ) : (
         ''
-      )} */}
-
+      )}
       <div className="text-zone">
         <BsEmojiSmile onClick={() => setPutEmoji(!putEmoji)} />
         <input
@@ -99,7 +125,19 @@ function BottomBar() {
           }}
           value={curentMessage}
         />
-        <AiFillCamera onClick={() => {}} />
+        <input
+          ref={imageRef}
+          type="file"
+          accept="image/png, image/jpeg"
+          name="image"
+          onChange={(e) => setSelectedFile(e.target.files[0])}
+          className="image-input"
+        />
+        <AiFillCamera
+          onClick={() => {
+            imageRef.current.click()
+          }}
+        />
       </div>
       <div className="send-icon" onClick={() => sendMessage()}>
         <IoMdSend />

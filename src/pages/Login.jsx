@@ -5,7 +5,7 @@ import SignInput from '../coponents/SignInput'
 import { userContext } from '../context'
 
 const Login = () => {
-  const host = 'http://localhost:3001/users/'
+  const host = `${process.env.REACT_APP_LOCAL_HOST}/users/`
 
   const { setIsConnected, setProfile } = useContext(userContext)
 

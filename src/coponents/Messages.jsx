@@ -24,7 +24,6 @@ const Messages = () => {
     conversations.map(async (element) => {
       return (await element._id) === selectedGroup && setMessages(element)
     })
-    console.log(messages)
     setLoader(false)
   }
 
@@ -87,6 +86,7 @@ const Messages = () => {
                       display={message.from === userId ? 'you' : 'other'}
                       pointer={message.from === userId ? 'other' : 'me'}
                       message={message.message}
+                      image={message.media}
                     />
                   )
                 })

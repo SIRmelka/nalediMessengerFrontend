@@ -22,7 +22,6 @@ function BottomBar() {
     messages,
   } = useContext(userContext)
   const [curentMessage, setCurentMessage] = useState()
-  const [curentImage, setCurentImage] = useState()
   const [selectedFile, setSelectedFile] = useState(false)
   const [previewLink, setPreviewLink] = useState()
   const imageRef = useRef()
@@ -39,22 +38,7 @@ function BottomBar() {
     }
   }, [selectedFile])
 
-  const sendMessage = async () => {
-    setSending(true)
-    messageSent.play()
-    setCurentMessage('')
-    setPreviewLink('')
-    selectedFile !== ''
-      ? await axios
-          .post(
-            'https://api.cloudinary.com/v1_1/drfvs4cyj/image/upload/',
-            formData
-          )
-          .then((res) => {
-            setCurentImage(res.data.secure_url)
-            setSelectedFile('')
-          })
-      : ''
+  const postMessage = async (text, media) => {
     await axios({
       method: 'post',
       url: `${host}/api/messages/newmessage/${selectedGroup}?from=${userId}&to=${selectedUser}`,
@@ -62,15 +46,15 @@ function BottomBar() {
         Authorization: token,
       },
       data: {
-        message: curentMessage,
-        media: curentImage,
+        message: text,
+        media: media,
       },
     })
       .then(() => {
         const data = {
           date: Date.now(),
           from: userId,
-          media: '',
+          media: media,
           message: curentMessage,
           seen: false,
         }
@@ -78,10 +62,32 @@ function BottomBar() {
         messages.messages.push(data)
         setSending(false)
         setLastMessage(Date.now)
+        console.log('message sended')
       })
       .catch((err) => console.log(err))
   }
 
+  const sendMessage = async () => {
+    setSending(true)
+    messageSent.play()
+    setCurentMessage('')
+    setPreviewLink('')
+
+    selectedFile
+      ? await axios
+          .post(
+            'https://api.cloudinary.com/v1_1/drfvs4cyj/image/upload/',
+            formData
+          )
+          .then((res) => {
+            setSelectedFile('')
+            console.log(res.data.secure_url)
+            postMessage(curentMessage, res.data.secure_url)
+            console.log('image uploaded')
+          })
+          .catch((err) => console.log(err))
+      : postMessage(curentMessage, '')
+  }
   return (
     <div className="bottom-section">
       {putEmoji ? (
@@ -127,7 +133,11 @@ function BottomBar() {
           onChange={(e) => setSelectedFile(e.target.files[0])}
           className="image-input"
         />
-        <AiFillCamera onClick={() => {}} />
+        <AiFillCamera
+          onClick={() => {
+            imageRef.current.click()
+          }}
+        />
       </div>
       <div className="send-icon" onClick={() => sendMessage()}>
         <IoMdSend />

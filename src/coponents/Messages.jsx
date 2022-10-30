@@ -42,7 +42,7 @@ const Messages = () => {
     ? messages.users[0]._id === userId
       ? setSelectedUser(messages.users[1]._id)
       : setSelectedUser(messages.users[0]._id)
-    : console.log('')
+    : ''
 
   return (
     <div className="messages">

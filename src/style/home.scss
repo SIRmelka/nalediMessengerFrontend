@@ -40,6 +40,19 @@
       display: flex;
       flex-direction: column;
 
+      ::-webkit-scrollbar {
+        width: 10px;
+       
+      }
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+      }
+       
+      ::-webkit-scrollbar-thumb {
+        background-color: #999;
+        outline: 1px solid slategrey;
+        border-radius: 20px;
+      }
       .chat-info {
         display: flex;
         align-items: center;
@@ -70,6 +83,7 @@
         }
       }
       .chat-section {
+       
         display: flex;
         flex-direction: column;
         .you {
@@ -266,9 +280,20 @@
   overflow-x: hidden;
 }
 .image-sended{
-  width: 200px;
+  width: 300px;
   border-radius:10px ;
   border: 1px solid #ddd;
+  animation: image-zoom 0.3s;
+
+  @keyframes image-zoom {
+    from{
+      transform: scale(0);
+    }
+    to{
+      transform: scale(1);
+    }
+    
+  }
 }
 .image-input{
   display: none;

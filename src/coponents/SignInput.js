@@ -21,6 +21,7 @@ const SignInput = ({
         onChange={(event) => {
           setFirstname(event.target.value)
         }}
+        required
       ></input>
 
       <input
@@ -30,6 +31,7 @@ const SignInput = ({
         onChange={(event) => {
           setLastname(event.target.value)
         }}
+        required
       ></input>
 
       <input
@@ -39,6 +41,7 @@ const SignInput = ({
         onChange={(event) => {
           setEmail(event.target.value)
         }}
+        required
       ></input>
 
       <input
@@ -48,6 +51,7 @@ const SignInput = ({
         onChange={(event) => {
           setConfirmPassword(event.target.value)
         }}
+        required
       ></input>
 
       <input
@@ -57,6 +61,7 @@ const SignInput = ({
         onChange={(event) => {
           setPassword(event.target.value)
         }}
+        required
       ></input>
     </>
   )

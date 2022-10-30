@@ -45,16 +45,14 @@
         outline: none;
         border: 1px solid #eee;
         transition: 0.4s;
-        animation: logAnimation 1s;
+        animation: logAnimation 0.3s;
       }
       @keyframes logAnimation {
         from {
-          opacity: 0;
-          transform: rotate(-15deg);
+          transform: scale(0);
         }
         to {
-          opacity: 1;
-          transform: rotate(0deg);
+          transform: scale(1);
         }
       }
       input:focus {
@@ -94,12 +92,12 @@
 
       span {
         margin: 0 1em;
-        transition: 0.3s;
+        transition: 0.1s;
       }
       span:hover {
         cursor: pointer;
         color: $primary;
-        font-weight: 700;
+        // font-weight: 700;
       }
     }
   }

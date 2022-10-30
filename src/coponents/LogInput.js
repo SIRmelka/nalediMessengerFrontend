@@ -10,6 +10,7 @@ const LogInput = ({ email, setEmail, password, setPassword }) => {
         onChange={(event) => {
           setEmail(event.target.value)
         }}
+        required
       ></input>
       <input
         type="Password"
@@ -18,6 +19,7 @@ const LogInput = ({ email, setEmail, password, setPassword }) => {
         onChange={(event) => {
           setPassword(event.target.value)
         }}
+        required
       ></input>
     </>
   )

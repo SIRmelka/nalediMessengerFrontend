@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import Contacts from '../coponents/Contacts'
-import Messages from '../coponents/Messages'
-import SideBar from '../coponents/SideBar'
+import Contacts from '../components/Contacts'
+import Messages from '../components/Messages'
+import SideBar from '../components/SideBar'
 import { userContext } from '../context'
 
 const Home = () => {

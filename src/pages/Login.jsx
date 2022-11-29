@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import LogInput from '../coponents/LogInput'
-import SignInput from '../coponents/SignInput'
+import LogInput from '../components/LogInput'
+import SignInput from '../components/SignInput'
 import { userContext } from '../context'
 
 const Login = () => {
@@ -12,6 +12,7 @@ const Login = () => {
   const [connexionMessage, setConexionMessage] = useState({})
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [method, setMethod] = useState('login')
@@ -105,6 +106,8 @@ const Login = () => {
               setEmail={setEmail}
               password={password}
               setPassword={setPassword}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
             />
           )}
 

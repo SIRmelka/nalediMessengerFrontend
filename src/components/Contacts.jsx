@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect } from 'react'
 import { BiSearch } from 'react-icons/bi'
 import { FiMoreVertical } from 'react-icons/fi'
@@ -12,10 +13,12 @@ const Contacts = () => {
     host,
     token,
     userId,
+    selectedGroup,
     setSelectedGroup,
     conversations,
     setConversations,
     searchingContacts,
+    setSearchingContacts,
     selectedUser,
     setSelectedUser,
     setSending,
@@ -71,6 +74,8 @@ const Contacts = () => {
     })
       .then((conv) => {
         setSelectedGroup(conv.data._id)
+        setSearchingContacts(false)
+        console.log(selectedGroup)
       })
       .catch((err) => console.log(err))
   }
@@ -132,8 +137,8 @@ const Contacts = () => {
                   onClick={() => {
                     {
                       if (userId !== user._id) {
-                        setSelectedUser(user._id)
                         startDiscussion(user._id)
+                        setSelectedUser(user._id)
                       } else {
                         alert('you')
                       }

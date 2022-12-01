@@ -82,11 +82,11 @@ const Contacts = () => {
 
   return (
     <div className="contacts">
-      <div className="search-bar">
+      {/* <div className="search-bar">
         <BiSearch className="search-icon" />
         <input type="text" placeholder="Search"></input>
         <FiMoreVertical className="more-icon" />
-      </div>
+      </div> */}
 
       {!searchingContacts ? (
         <div className="contact-list">

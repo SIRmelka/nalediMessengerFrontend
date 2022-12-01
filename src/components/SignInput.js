@@ -35,7 +35,7 @@ const SignInput = ({
       ></input>
 
       <input
-        type="email"
+        // type="email"
         placeholder="E-mail address"
         value={email}
         onChange={(event) => {

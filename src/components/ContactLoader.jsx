@@ -8,7 +8,11 @@ function ContactLoader() {
       {count.map((element, index) => {
         return (
           <div className="contact-loader" key={index}>
-            <div className="inner-loader"></div>
+            <div className="circle"></div>
+            <div className="right">
+              <div className="pre-name"></div>
+              <div className="pre-message"></div>
+            </div>
           </div>
         )
       })}

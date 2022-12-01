@@ -1,8 +1,16 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import LogInput from '../coponents/LogInput'
-import SignInput from '../coponents/SignInput'
+import LogInput from '../components/LogInput'
+import SignInput from '../components/SignInput'
 import { userContext } from '../context'
+
+function isEmail(emailAdress) {
+  let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+  if (emailAdress.match(regex)) return true
+  else return false
+}
 
 const Login = () => {
   const host = `${process.env.REACT_APP_LOCAL_HOST}/users/`
@@ -12,6 +20,7 @@ const Login = () => {
   const [connexionMessage, setConexionMessage] = useState({})
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [method, setMethod] = useState('login')
@@ -43,27 +52,31 @@ const Login = () => {
   }
 
   const signup = () => {
-    axios({
-      method: 'post',
-      url: host + method,
-      data: {
-        firstName: firstname,
-        lastName: lastname,
-        email: email,
-        profile: `https://ui-avatars.com/api/?name=${firstname}+${lastname}&background=random`,
-        password: password,
-      },
-    })
-      .then(() => {
-        login()
-      })
-      .catch((err) => {
-        console.log(err)
-        setConexionMessage({
-          message: err.response.data,
-          status: err.response.status,
-        })
-      })
+    password == confirmPassword
+      ? isEmail(email)
+        ? axios({
+            method: 'post',
+            url: host + method,
+            data: {
+              firstName: firstname,
+              lastName: lastname,
+              email: email,
+              profile: `https://ui-avatars.com/api/?name=${firstname}+${lastname}&background=random`,
+              password: password,
+            },
+          })
+            .then(() => {
+              login()
+            })
+            .catch((err) => {
+              console.log(err)
+              setConexionMessage({
+                message: err.response.data,
+                status: err.response.status,
+              })
+            })
+        : alert('Entrez un mail valide')
+      : alert('les deux mots de passe sont différents')
   }
 
   const submit = () => {
@@ -105,6 +118,8 @@ const Login = () => {
               setEmail={setEmail}
               password={password}
               setPassword={setPassword}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
             />
           )}
 
@@ -114,7 +129,7 @@ const Login = () => {
             ''
           )}
 
-          <button> Se connecter</button>
+          <button> {method}</button>
         </form>
 
         <div className="footer">

@@ -30,6 +30,7 @@ const SideBar = () => {
         onClick={() => {
           setIsConnected(false)
           localStorage.removeItem('token')
+          location.reload()
         }}
       >
         <IoLogOut />
